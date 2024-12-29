@@ -25,7 +25,7 @@ app.get('/blogs',(req,res)=>{
 app.post('/blog', (req, res) => {
     const { title, content } = req.body;
     
-    if (!title) {
+    if (!title || !content) {
         return res.status(400).send('Invalid input, blog content is required.');
     }
     
