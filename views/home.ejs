@@ -1,0 +1,40 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+        <meta charset="UTF-8">
+        <title>home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/global.css">
+        <!-- Google Fonts and Font Awesome -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+ </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="/">MOVIC-BlogApp</a>
+            </div>
+    
+            <!-- Hamburger Menu for Mobile -->
+            <div class="hamburger" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+    
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/blog">Blogs</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+
+        <script>
+            document.getElementById('menu-toggle').addEventListener('click',  () => {
+                var navMenu = document.getElementById('nav-menu');
+                navMenu.classList.toggle('open');
+            });
+        </script>
+    </body>
+ </html>
