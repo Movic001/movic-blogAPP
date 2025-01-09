@@ -45,7 +45,7 @@ app.post('/blog', (req, res) => {
 app.get('/blogs',(req,res)=>{
     const sql = 'SELECT * FROM blog';
     db.query(sql,(err,results)=>{
-        if(err){
+        if(err){ 
             console.log(`error invalid request: ${err.message}`);
         }
         // console.log(`successfully fetched all blog posts`);
