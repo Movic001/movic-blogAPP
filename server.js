@@ -3,12 +3,14 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 3030;
 const db =require('./db');
-app.set("view engine", "ejs");
+
 //app.use(express.static('public'));
  app.use(express.static(path.join(__dirname, 'public')));
  app.use(express.urlencoded({extended: true}));
+ app.use(express.json());
+ app.set("view engine", "ejs");
+ app.set('views', path.join(__dirname, 'views'));
  
-
 app.get('/',(req,res)=>{
     return res.render('home')
 });
@@ -17,9 +19,6 @@ app.get('/blog',(req,res)=>{
     return res.render('blog')
 });
 
-app.get('/blogs',(req,res)=>{
-    return res.render('blogs')
-});
 
 //create a new blog post
 app.post('/blog', (req, res) => {
@@ -37,27 +36,24 @@ app.post('/blog', (req, res) => {
         }
         console.log(`sucuessfully posted to the database`)
        return res.status(201).redirect('/blogs')
-    //    ({
-    //     ID: results.insertId,
-    //     message: `Blog post was created sucessfully`,
-    //     PostedData: 
-    //    });
     });
 });
 
 
 // Read all the list of blog article
 
-app.get('/blogs', (req, res) => {
+app.get('/blogs',(req,res)=>{
     const sql = 'SELECT * FROM blog';
-    db.query(sql, (err, results) => {
-        if (err) {
-            console.log(`Error fetching blogs: ${err.message}`);
-            return res.status(500).send(`Error fetching blogs: ${err.message}`);
+    db.query(sql,(err,results)=>{
+        if(err){
+            console.log(`error invalid request: ${err.message}`);
         }
-       return res.render('blogs', { blog: results });
+        // console.log(`successfully fetched all blog posts`);
+         return res.status(200).render('blogs',{blogs : results});
+         //res.status(200).json({results});
     });
 });
+
 
 
 // Read a specific post by id
@@ -83,12 +79,12 @@ app.get('/blogs/:id', (req, res) => {
 
 // Update a single article by id
 
-app.put('/blogs/:id',(req,res)=>{
-const { id } = req.params;
-const { text } = req.body;
-  if(!text || !id){
-    return res.status(500).send(` id is required`)
-  }
+    app.put('/blogs/:id',(req,res)=>{
+    const { id } = req.params;
+    const { text } = req.body;
+    if(!text || !id){
+        return res.status(500).send(` id is required`)
+    }
   //check if id is not valid
   if (isNaN(id)) {
     return res.status(400).send(`'Invalid id format: ${id}`);

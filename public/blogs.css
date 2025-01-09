@@ -1,0 +1,70 @@
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #333;
+    padding: 20px;
+    margin-top: 4.5rem;
+    background-color: #fff;
+    border-bottom: 3px solid #ccc;
+}
+
+/* Container for the blog posts */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Individual blog post style */
+.blog-post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for blog posts */
+.blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Blog post title styling */
+.blog-post h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #0077cc;
+}
+
+/* Blog post content styling */
+.blog-post p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    .container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    .blog-post h2 {
+        font-size: 1.5rem;
+    }
+    .blog-post p {
+        font-size: 0.9rem;
+    }
+}

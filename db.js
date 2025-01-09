@@ -1,14 +1,16 @@
 const mysql = require('mysql2');
+const dotenv = require('dotenv'); 
+dotenv.config();
 
 // Create a connection to the MySQL database
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'movic',
-    password: 'admin',
-    database: 'blog'
-});
+    host:     process.env.MYSQL_HOST,
+    user:     process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE
+}); 
 
-// Connect to the database
+//Connect to the database
 db.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err.message);
@@ -22,7 +24,7 @@ db.connect((err) => {
             console.error('Error creating database:', err.message);
             return;
         }
-        console.log('Database "blog" exists or was created.');
+        console.log('Database "blog" was created.');
 
         // Switch to the blog database
         db.query('USE blog', (err, results) => {
