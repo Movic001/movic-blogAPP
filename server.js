@@ -50,7 +50,6 @@ app.get('/blogs',(req,res)=>{
         }
         // console.log(`successfully fetched all blog posts`);
          return res.status(200).render('blogs',{blogs : results});
-         //res.status(200).json({results});
     });
 });
 
@@ -104,7 +103,7 @@ const sql = `UPDATE blog SET \`text\`=? WHERE \`id\`=?`;
 
 
 // Delete a blog post by id
-app.delete('/blogs/:id',(req,res)=>{
+app.get('/delete/:id',(req,res)=>{
     const {id} = req.params;
     if(!id){
        return res.status(500).send(`Id is required: No id: ${id} found`)
@@ -114,7 +113,8 @@ app.delete('/blogs/:id',(req,res)=>{
             if(err){
                 res.status(500).send(`Error trying to delete id: ${id}`);
             }
-            return res.status(201).send(` id: ${id} was deleted sucessfullt from DataBase`)
+            //return res.status(201).send(` id: ${id} was deleted sucessfullt from DataBase`)
+             return res.status(201).redirect('/blogs');
         });
 });
 

@@ -38,6 +38,9 @@
             <div class="blog-post">
                 <h2><%= blog.title %></h2>
                 <p><%= blog.content %></p>
+                <form class="delete-route" method="get" action="/delete/<%= blog.id %>">
+                    <button type="submit">delete</button>
+                </form>
             </div>
         <% }); %>
 
