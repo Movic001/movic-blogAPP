@@ -4,6 +4,7 @@ const path = require('path');
 const port = process.env.PORT || 3030;
 const db =require('./db');
 
+
 //app.use(express.static('public'));
  app.use(express.static(path.join(__dirname, 'public')));
  app.use(express.urlencoded({extended: true}));
@@ -56,6 +57,7 @@ app.get('/blogs',(req,res)=>{
 
 
 // Read a specific post by id
+
 app.get('/blogs/:id', (req, res) => {
     const {id} = req.params;
      if(!id){
@@ -70,45 +72,66 @@ app.get('/blogs/:id', (req, res) => {
         if (err) {
             console.log(`Error fetching blogs: ${err.message}`);
             return res.status(500).send(`Error fetching blogs: ${err.message}`);
-        }
-        res.status(200).json(results);
+        } 
+        res.status(200).render('blogs', {blogs : results});
+    });
+});
+
+
+
+// update page to update a blog post
+
+app.get('/update/:id',(req,res)=>{
+    const {id} = req.params;
+    if(!id){
+       return res.status(500).send(`Id is required: No id: ${id} found`)
+    } 
+    if(isNaN(id)){
+        return res.status(500).send(`Invalid id format: ${id}`)
+    }
+    const sql = 'SELECT * FROM blog WHERE \`id\` = ?';
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            console.log(`Error fetching blogs: ${err.message}`);
+            return res.status(500).send(`Error fetching blogs: ${err.message}`);
+        } 
+        res.status(200).render('update', {blog : results});
     });
 });
 
 
 // Update a single article by id
 
-    app.put('/blogs/:id',(req,res)=>{
+app.post('/blogs/:id', (req, res) => {
     const { id } = req.params;
-    const { text } = req.body;
-    if(!text || !id){
-        return res.status(500).send(` id is required`)
-    }
-  //check if id is not valid
-  if (isNaN(id)) {
-    return res.status(400).send(`'Invalid id format: ${id}`);
-}
+    const { title, content } = req.body;
 
-const sql = `UPDATE blog SET \`text\`=? WHERE \`id\`=?`;
-  db.query(sql,[text, id],(err,results)=>{
-    if(err){
-        return res.status(500).send(`enable to update from blog post: ${id}: ${err.message}`)
+    if (!title || !content || !id) {
+        return res.status(400).send(`Title and content are required.`);
     }
-        return res.status(200).json({
-            message: `Blog post with ID: ${id} updated successfully.`,
-            updatedText: text
-        });
-  });
+
+    // Check if id is a valid number
+    if (isNaN(id)) {
+        return res.status(400).send(`Invalid id format: ${id}`);
+    }
+    const sql = `UPDATE blog SET title = ?, content = ? WHERE id = ?`;
+    db.query(sql, [title, content, id], (err, results) => {
+        if (err) {
+            return res.status(500).send(`Unable to update blog post with ID: ${id}: ${err.message}`);
+        }
+        console.log(`Blog post with ID: ${id} was Updated Successfully.`);
+        res.status(200).redirect('/blogs');
+    });
 });
 
 
 // Delete a blog post by id
-app.get('/delete/:id',(req,res)=>{
+app.post('/delete/:id',(req,res)=>{
     const {id} = req.params;
     if(!id){
        return res.status(500).send(`Id is required: No id: ${id} found`)
     } 
-        const sql= `DELETE FROM blog WHERE \`id\`=?`;
+        const sql= `DELETE FROM blog WHERE \`id\`= ? `;
         db.query(sql,[id],(err,results)=>{
             if(err){
                 res.status(500).send(`Error trying to delete id: ${id}`);
