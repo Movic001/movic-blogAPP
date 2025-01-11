@@ -39,9 +39,9 @@
                 <h2><%= blog.title %></h2>
                 <p><%= blog.content %></p>
                 <form class="delete-route" method="post" action="/delete/<%= blog.id %>">
-                    <button type="submit">delete</button>
+                    <button type="submit">Delete</button>
                 </form>
-                <a href="/update/<%= blog.id %>">Update</a>
+                <a class="update" href="/update/<%= blog.id %>">Update</a>
                 
             </div>
         <% }); %>

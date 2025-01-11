@@ -20,7 +20,7 @@ h2 {
     color: #333;
 }
 
-input[type="text"] {
+textarea,input[type="text"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -30,6 +30,13 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+textarea{
+    height:150px;
+}
+textarea:focus {
     border-color: #007BFF;
     outline: none;
 }
