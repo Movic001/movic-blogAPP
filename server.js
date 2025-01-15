@@ -4,6 +4,10 @@ const path = require('path');
 const port = process.env.PORT || 3030;
 const db =require('./db');
 
+const methodOverride = require('method-override');
+
+app.use(methodOverride('_method'));
+
 
 //app.use(express.static('public'));
  app.use(express.static(path.join(__dirname, 'public')));
@@ -95,14 +99,14 @@ app.get('/update/:id',(req,res)=>{
             console.log(`Error fetching blogs: ${err.message}`);
             return res.status(500).send(`Error fetching blogs: ${err.message}`);
         } 
-        res.status(200).render('update', {blog : results});
+        return res.status(200).render('update', {blog : results});
     });
 });
 
 
 // Update a single article by id
 
-app.post('/blogs/:id', (req, res) => {
+app.put('/blogs/:id', (req, res) => {
     const { id } = req.params;
     const { title, content } = req.body;
 
@@ -120,7 +124,7 @@ app.post('/blogs/:id', (req, res) => {
             return res.status(500).send(`Unable to update blog post with ID: ${id}: ${err.message}`);
         }
         console.log(`Blog post with ID: ${id} was Updated Successfully.`);
-        res.status(200).redirect('/blogs');
+        return res.status(200).redirect(`/blogs/${id}`);
     });
 });
 

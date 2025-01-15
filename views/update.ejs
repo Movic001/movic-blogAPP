@@ -33,15 +33,15 @@
 
         <div class="form-container">
             
-            <form method="POST" action="/blogs/<%= blog.id%>" enctype="application/x-www-form-urlencoded">
-                <%= console.log(blog.id) %>
+            <form method="POST" action="/blogs/<%= blog[0].id %>" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="_method" value="put">
 
                 <h2>Update blog</h2>
-                <input type="text" id="title" name="title" value="<%= blog.title %>" required> 
+                <input type="text" id="title" name="title" value="<%= blog[0].title %>" required> 
                 <br>
                 <br>
-                <textarea id="content" name="content" required></textarea> <%= blog.content %></textarea>
+                
+                <textarea id="content" name="content" required> <%= blog[0].content %></textarea>
                 <br>
                 <br>
                 <button class="button-container" type="submit">Update Blog</button>
