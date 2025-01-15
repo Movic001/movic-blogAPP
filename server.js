@@ -4,18 +4,21 @@ const path = require('path');
 const port = process.env.PORT || 3030;
 const db =require('./db');
 
-const methodOverride = require('method-override');
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(methodOverride('_method'));
+// Middleware to parse URL-encoded bodies (from forms)
+app.use(express.urlencoded({ extended: true }));
 
+// Middleware to parse JSON bodies (for API requests)
+app.use(express.json());
 
-//app.use(express.static('public'));
- app.use(express.static(path.join(__dirname, 'public')));
- app.use(express.urlencoded({extended: true}));
- app.use(express.json());
- app.set("view engine", "ejs");
- app.set('views', path.join(__dirname, 'views'));
- 
+// Set the view engine to EJS (Embedded JavaScript templating)
+app.set("view engine", "ejs");
+
+// Set the directory where the views are located
+app.set('views', path.join(__dirname, 'views'));
+
 app.get('/',(req,res)=>{
     return res.render('home')
 });
