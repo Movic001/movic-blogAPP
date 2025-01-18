@@ -102,14 +102,14 @@ app.get('/update/:id',(req,res)=>{
             console.log(`Error fetching blogs: ${err.message}`);
             return res.status(500).send(`Error fetching blogs: ${err.message}`);
         } 
-        return res.status(200).render('update', {blog : results});
+        return res.status(201).render('update', {blog : results});
     });
 });
 
 
 // Update a single article by id
 
-app.put('/blogs/:id', (req, res) => {
+app.post('/blogs/:id', (req, res) => {
     const { id } = req.params;
     const { title, content } = req.body;
 

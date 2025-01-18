@@ -32,8 +32,8 @@
         </header>
 
         <div class="form-container">
+        <form method="POST" action="/blogs/<%= blog[0].id %>" enctype="application/x-www-form-urlencoded">
             
-            <form method="POST" action="/blogs/<%= blog[0].id %>" enctype="application/x-www-form-urlencoded">
                 <input type="hidden" name="_method" value="put">
 
                 <h2>Update blog</h2>

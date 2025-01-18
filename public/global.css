@@ -9,7 +9,7 @@
 
         /* Header (Navigation Bar) */
         header {
-            background-color: #333;
+            background-color: #0056b3;
             color: white;
             padding: 20px;
             display: flex;
@@ -48,7 +48,7 @@
         }
 
         nav ul li:hover {
-            background-color: #444;
+            background-color: #007BFF;
         }
 
         /* Hamburger Menu (Visible on Mobile) */
